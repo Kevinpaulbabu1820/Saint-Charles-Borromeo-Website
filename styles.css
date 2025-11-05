@@ -603,6 +603,13 @@ p { margin: 0 0 1rem; color: var(--muted); }
 .button.small { padding: .45rem .7rem; font-size: .9rem; }
 .button:hover { filter: brightness(1.08); }
 
+/* Improve button contrast in light theme */
+[data-theme="light"] .button { border-color: rgba(0,0,0,.18); color: var(--text); }
+[data-theme="light"] .button:hover { background: rgba(0,0,0,.06); }
+
+/* Make quote controls clearly visible across themes */
+.quote-controls .button { background: var(--pill); color: var(--text); border-color: transparent; }
+
 .section { padding: 3.5rem 0; }
 .section.alt { background: var(--bg-alt); border-top: 1px solid rgba(255,255,255,.06); border-bottom: 1px solid rgba(255,255,255,.06); }
 
