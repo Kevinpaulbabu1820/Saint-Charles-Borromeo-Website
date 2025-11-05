@@ -165,4 +165,46 @@ document.addEventListener('DOMContentLoaded', function() {
 		langSelect.addEventListener('change', () => applyLanguage(langSelect.value));
 	}
 
+	// Quotes rotator (Previous/Next buttons)
+	const quotes = qsa('.quote');
+	if (quotes.length > 0) {
+		let currentIndex = Math.max(0, quotes.findIndex(q => q.classList.contains('active')));
+		if (currentIndex === -1) currentIndex = 0;
+
+		const showAt = (i) => {
+			quotes.forEach(q => q.classList.remove('active'));
+			quotes[i].classList.add('active');
+		};
+
+		const goNext = () => {
+			currentIndex = (currentIndex + 1) % quotes.length;
+			showAt(currentIndex);
+		};
+
+		const goPrev = () => {
+			currentIndex = (currentIndex - 1 + quotes.length) % quotes.length;
+			showAt(currentIndex);
+		};
+
+		// Initialize display in case no element is marked active
+		showAt(currentIndex);
+
+		qs('[data-next]')?.addEventListener('click', (e) => {
+			e.preventDefault();
+			goNext();
+		});
+		qs('[data-prev]')?.addEventListener('click', (e) => {
+			e.preventDefault();
+			goPrev();
+		});
+
+		// Optional auto-advance with hover pause
+		let autoTimer = setInterval(goNext, 6000);
+		const quotesContainer = qs('.quotes');
+		quotesContainer?.addEventListener('mouseenter', () => clearInterval(autoTimer));
+		quotesContainer?.addEventListener('mouseleave', () => {
+			autoTimer = setInterval(goNext, 6000);
+		});
+	}
+
 });
